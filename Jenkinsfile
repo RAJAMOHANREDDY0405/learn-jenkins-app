@@ -9,7 +9,8 @@ pipeline {
                     reuseNode true
                 }
             }
-            steps{
+            steps
+            {
                 sh '''
                     ls -la
                     npm --version
@@ -19,6 +20,13 @@ pipeline {
                     ls -la
                 '''
             }
+        }
+        stage('test'){
+            echo 'test stage'
+            sh '''
+                test -f build\index.html
+                npm test
+           '''
         }
     }
 }
