@@ -28,7 +28,7 @@ pipeline
 
        stage('Tests')
        {
-            parllel 
+            parallel 
             {
            stage('Unit Test') 
            {
