@@ -108,31 +108,6 @@ pipeline {
             }
 
         }
-
-        stage('Staging E2E') {
-            agent {
-                docker {
-                    image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
-                    reuseNode true
-                }
-            }
-
-            environment {
-                CI_ENVIRONMENT_URL = "${env.STAGING_URL}"
-            }
-
-            steps {
-                sh '''
-                    npx playwright test  --reporter=html
-                '''
-            }
-
-            post {
-                always {
-                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: 'playwright-report', reportFiles: 'index.html', reportName: 'Staging E2E', reportTitles: '', useWrapperFileDirectly: true])
-                }
-            }
-        }
         stage('Deploy Prod') {
             agent {
                 docker {
@@ -140,6 +115,10 @@ pipeline {
                     reuseNode true
                 }
             }
+            environment {
+                CI_ENVIRONMENT_URL = 'https://elaborate-cranachan-a34022.netlify.app/'
+            }
+
             steps {
                 sh '''
                     npm install netlify-cli
