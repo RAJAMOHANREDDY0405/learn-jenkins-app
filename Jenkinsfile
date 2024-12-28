@@ -87,7 +87,7 @@ pipeline {
 
             environment {
                 CI_ENVIRONMENT_URL = 'STAGING_URL_TO_BE_SET'
-            }
+            }   
 
             steps {
                 sh '''
@@ -111,7 +111,7 @@ pipeline {
         stage('Deploy Prod') {
             agent {
                 docker {
-                    image 'node:18-alpine'
+                    image 'mcr.microsoft.com/playwright:v1.39.0-jammy'
                     reuseNode true
                 }
             }
